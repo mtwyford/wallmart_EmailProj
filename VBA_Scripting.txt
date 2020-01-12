@@ -1,0 +1,141 @@
+'  This procedure is designed to allow the user to post the contents
+'   of the web survey from outlook into the first sheet of the excel doc
+'   the first sub will paste the answers into a new row in the second,
+'   or third sheet depending on the survey type.
+'   the second sub will clear the first sheet, to paste another survey in
+'
+' This macro deletes all rows on the active worksheet that
+' have non-unique values in the selected column, including blanks.
+'
+Private Sub cmdSurveyData_Click()
+
+Dim iRow As Long
+Dim jRow As Long
+Dim LastRow As Long
+Dim strSurveyID As String
+Dim strSurveyDate As String
+Dim strName As String
+Dim strRegion As String
+Dim strTrainDate As String
+Dim strMyString As String
+Dim strMyString2 As String
+Dim iLength As Integer
+'
+'
+'
+''First, check to see if there is anything in sheet2, and which row is next available.
+''next do we want to put the surveys in two different sheets, based on survey
+'' type or do two different rows?
+
+''start this by clicking on the second row down in sheet2
+        
+Worksheets("Sheet2").Activate
+'LastRow = Selection.Rows.Count
+'ActiveCell.EntireRow.Insert
+
+
+Worksheets("Sheet1").Activate
+jRow = jRow + 9067
+
+For iRow = 65000 To 2 Step -1
+
+    If Worksheets("Sheet1").Cells(iRow, 1).Value Like "remote***" Then
+        
+        ' Add counter or length function
+        ' to strip off left 19 characters
+        strMyString = Cells(iRow, 1).Value
+        iLength = Len(strMyString)
+        iLength = iLength - 19
+        strMyString2 = Right(strMyString, iLength)
+        Worksheets("Sheet2").Cells(jRow, 7).Value = strMyString2
+        
+     ElseIf Worksheets("Sheet1").Cells(iRow, 1).Value Like "change_tool:***" Then
+        
+        ' Add counter or length function
+        ' to strip off left 8 characters
+        strMyString = Cells(iRow, 1).Value
+        iLength = Len(strMyString)
+        iLength = iLength - 14
+        strMyString2 = Right(strMyString, iLength)
+        Worksheets("Sheet2").Cells(jRow, 6).Value = strMyString2
+        
+     ElseIf Worksheets("Sheet1").Cells(iRow, 1).Value Like "helpful_tool:***" Then
+        
+        ' Add counter or length function
+        ' to strip off left 8 characters
+        strMyString = Cells(iRow, 1).Value
+        iLength = Len(strMyString)
+        iLength = iLength - 15
+        strMyString2 = Right(strMyString, iLength)
+        Worksheets("Sheet2").Cells(jRow, 5).Value = strMyString2
+        
+        
+    ElseIf Worksheets("Sheet1").Cells(iRow, 1).Value Like "scale:***" Then
+        
+        ' Add counter or length function
+        ' to strip off left 8 characters
+        strMyString = Cells(iRow, 1).Value
+        iLength = Len(strMyString)
+        iLength = iLength - 8
+        strMyString2 = Right(strMyString, iLength)
+        Worksheets("Sheet2").Cells(jRow, 4).Value = strMyString2
+
+    
+    ElseIf Worksheets("Sheet1").Cells(iRow, 1).Value Like "select_covered_by:***" Then
+        ' As the name of a person can vary greatly,
+        ' Add counter or length function
+        ' to strip off left 5 characters
+        strMyString = Cells(iRow, 1).Value
+        iLength = Len(strMyString)
+        iLength = iLength - 20
+        strMyString2 = Right(strMyString, iLength)
+        Worksheets("Sheet2").Cells(jRow, 3).Value = strMyString2
+
+    
+    ElseIf Worksheets("Sheet1").Cells(iRow, 1).Value Like "select_job_title:***" Then
+        ' As the name of a person can vary greatly,
+        ' Add counter or length function
+        ' to strip off left 5 characters
+        strMyString = Cells(iRow, 1).Value
+        iLength = Len(strMyString)
+        iLength = iLength - 19
+        strMyString2 = Right(strMyString, iLength)
+        Worksheets("Sheet2").Cells(jRow, 2).Value = strMyString2
+       'USE SELECT CASE TO SWITCH SA to "5"
+
+    
+    ElseIf Worksheets("Sheet1").Cells(iRow, 1).Value Like "store_number:***" Then
+        ' As the name of a person can vary greatly,
+        ' Add counter or length function
+        ' to strip off left 5 characters
+        strMyString = Cells(iRow, 1).Value
+        iLength = Len(strMyString)
+        iLength = iLength - 15
+        strMyString2 = Right(strMyString, iLength)
+        Worksheets("Sheet2").Cells(jRow, 1).Value = strMyString2
+        
+        
+    ElseIf Worksheets("Sheet1").Cells(iRow, 1).Value Like "submitted by***" Then
+        ' As the name of a person can vary greatly,
+        ' Add counter or length function
+        ' to strip off left 5 characters
+        strMyString = Cells(iRow, 1).Value
+        iLength = Len(strMyString)
+        iLength = iLength - 36
+        strMyString2 = Right(strMyString, iLength)
+        Worksheets("Sheet2").Cells(jRow, 8).Value = strMyString2
+    
+    jRow = jRow + 1
+  End If
+
+
+Next iRow
+
+
+Worksheets("Sheet1").Range("A2:G65536").Clear
+'Worksheets("Sheet1").Range("B1:G65536").Clear
+Worksheets("Sheet1").Cells(2, 1).Value = "Select this cell and Paste here"
+Worksheets("Sheet1").Cells(2, 1).Interior.ColorIndex = 6
+
+
+End Sub
